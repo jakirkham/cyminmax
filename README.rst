@@ -31,7 +31,7 @@ cyminmax
 A minmax implementation in Cython for use with NumPy
 
 
-* Free software: BSD license
+* Free software: BSD 3-Clause
 * Documentation: https://cyminmax.readthedocs.io.
 
 
