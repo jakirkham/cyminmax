@@ -25,8 +25,12 @@ class PyTest(TestCommand):
 with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-requirements = [
-    # TODO: put package requirements here
+setup_requirements = [
+    # TODO: put package build requirements here
+]
+
+install_requirements = [
+    # TODO: put package install requirements here
 ]
 
 test_requirements = [
@@ -39,6 +43,10 @@ cmdclasses = {
 cmdclasses.update(versioneer.get_cmdclass())
 
 
+if not ({"build", "install"}.intersection(sys.argv) or
+    any([v.startswith("bdist") for v in sys.argv])):
+    setup_requirements = []
+
 setup(
     name="cyminmax",
     version=versioneer.get_version(),
@@ -50,7 +58,8 @@ setup(
     cmdclass=cmdclasses,
     packages=setuptools.find_packages(exclude=["tests*"]),
     include_package_data=True,
-    install_requires=requirements,
+    setup_requires=setup_requirements,
+    install_requires=install_requirements,
     license="BSD 3-Clause",
     zip_safe=False,
     keywords="cyminmax",
