@@ -43,8 +43,10 @@ cmdclasses = {
 cmdclasses.update(versioneer.get_cmdclass())
 
 
-if not ({"build", "install"}.intersection(sys.argv) or
-    any([v.startswith("bdist") for v in sys.argv])):
+if not (({"develop", "test"} & set(sys.argv)) or
+    any([v.startswith("build") for v in sys.argv]) or
+    any([v.startswith("bdist") for v in sys.argv]) or
+    any([v.startswith("install") for v in sys.argv])):
     setup_requirements = []
 
 setup(
