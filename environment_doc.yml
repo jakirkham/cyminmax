@@ -8,4 +8,4 @@ dependencies:
   - wheel==0.29.0
   - Sphinx==1.5.1
   - cython==0.25.2
-  - numpy==1.8.2
+  - numpy==1.11.3

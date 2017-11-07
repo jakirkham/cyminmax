@@ -45,7 +45,7 @@ with open("README.rst") as readme_file:
 
 setup_requirements = [
     "cython>=0.25.2",
-    "numpy>=1.8.2",
+    "numpy>=1.11.3",
 ]
 
 install_requirements = [
