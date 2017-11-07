@@ -45,10 +45,9 @@ test_requirements = [
     "pytest",
 ]
 
-cmdclasses = {
-    "test": PyTest,
-}
+cmdclasses = dict()
 cmdclasses.update(versioneer.get_cmdclass())
+cmdclasses["test"] = PyTest
 
 
 if not (({"develop", "test"} & set(sys.argv)) or
