@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
+from glob import glob
 
 import setuptools
-from setuptools import setup
+from setuptools import setup, Extension
 from setuptools.command.test import test as TestCommand
+
+from distutils.sysconfig import get_config_var, get_python_inc
 
 import versioneer
 
@@ -50,6 +54,23 @@ if not (({"develop", "test"} & set(sys.argv)) or
     any([v.startswith("install") for v in sys.argv])):
     setup_requirements = []
 
+
+include_dirs = [
+    os.path.dirname(get_python_inc()),
+    get_python_inc()
+]
+library_dirs = list(filter(
+    lambda v: v is not None,
+    [get_config_var("LIBDIR")]
+))
+
+headers = []
+sources = glob("src/*.pxd") + glob("src/*.pyx")
+libraries = []
+define_macros = []
+extra_compile_args = []
+
+
 setup(
     name="cyminmax",
     version=versioneer.get_version(),
@@ -63,6 +84,19 @@ setup(
     include_package_data=True,
     setup_requires=setup_requirements,
     install_requires=install_requirements,
+    headers=headers,
+    ext_modules=[
+        Extension(
+            "cyminmax",
+            sources=sources,
+            include_dirs=include_dirs,
+            library_dirs=library_dirs,
+            libraries=libraries,
+            define_macros=define_macros,
+            extra_compile_args=extra_compile_args,
+            language="c"
+        )
+    ],
     license="BSD 3-Clause",
     zip_safe=False,
     keywords="cyminmax",
