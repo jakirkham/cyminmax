@@ -8,5 +8,6 @@ dependencies:
   - wheel==0.29.0
   - coverage==4.0.3
   - python-coveralls==2.7.0
+  - cython==0.25.2
   - cryptography==1.4
   - pyyaml==3.11

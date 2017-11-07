@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys
+from glob import glob
 
 import setuptools
-from setuptools import setup
+from setuptools import setup, Extension
 from setuptools.command.test import test as TestCommand
+
+from distutils.sysconfig import get_config_var, get_python_inc
+
 import versioneer
 
 
@@ -22,11 +27,14 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
+version = versioneer.get_version()
+
 with open("README.rst") as readme_file:
     readme = readme_file.read()
 
+
 setup_requirements = [
-    # TODO: put package build requirements here
+    "cython>=0.25.2",
 ]
 
 install_requirements = [
@@ -48,10 +56,70 @@ if not (({"develop", "test"} & set(sys.argv)) or
     any([v.startswith("bdist") for v in sys.argv]) or
     any([v.startswith("install") for v in sys.argv])):
     setup_requirements = []
+else:
+    with open("src/version.pxi", "w") as f:
+        f.writelines([
+            "__version__ = " + "\"" + str(version) + "\""
+        ])
+
+
+try:
+    i = sys.argv.index("test")
+    sys.argv = sys.argv[:i] + ["build_ext", "--inplace"] + sys.argv[i:]
+except ValueError:
+    pass
+
+
+include_dirs = [
+    os.path.dirname(get_python_inc()),
+    get_python_inc()
+]
+library_dirs = list(filter(
+    lambda v: v is not None,
+    [get_config_var("LIBDIR")]
+))
+
+headers = []
+sources = glob("src/*.pxd") + glob("src/*.pyx")
+libraries = []
+define_macros = []
+extra_compile_args = []
+cython_directives = {}
+cython_line_directives = {}
+
+
+if "test" in sys.argv:
+    cython_directives["binding"] = True
+    cython_directives["embedsignature"] = True
+    cython_directives["profile"] = True
+    cython_directives["linetrace"] = True
+    define_macros += [
+        ("CYTHON_PROFILE", 1),
+        ("CYTHON_TRACE", 1),
+        ("CYTHON_TRACE_NOGIL", 1),
+    ]
+
+
+ext_modules = [
+    Extension(
+        "cyminmax",
+        sources=sources,
+        include_dirs=include_dirs,
+        library_dirs=library_dirs,
+        libraries=libraries,
+        define_macros=define_macros,
+        extra_compile_args=extra_compile_args,
+        language="c"
+    )
+]
+for em in ext_modules:
+    em.cython_directives = dict(cython_directives)
+    em.cython_line_directives = dict(cython_line_directives)
+
 
 setup(
     name="cyminmax",
-    version=versioneer.get_version(),
+    version=version,
     description="A minmax implementation in Cython for use with NumPy",
     long_description=readme,
     author="John Kirkham",
@@ -62,6 +130,8 @@ setup(
     include_package_data=True,
     setup_requires=setup_requirements,
     install_requires=install_requirements,
+    headers=headers,
+    ext_modules=ext_modules,
     license="BSD 3-Clause",
     zip_safe=False,
     keywords="cyminmax",
