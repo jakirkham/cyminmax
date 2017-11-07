@@ -12,3 +12,15 @@ ctypedef fused real:
     numpy.int64_t
     numpy.float32_t
     numpy.float64_t
+
+
+cdef inline void cminmax(real[:] arr, real[:] out) nogil:
+    cdef real arr_i = arr[0]
+    out[:] = arr_i
+
+    for i in range(1, arr.shape[0]):
+        arr_i = arr[i]
+        if arr_i < out[0]:
+            out[0] = arr_i
+        elif arr_i > out[1]:
+            out[1] = arr_i
