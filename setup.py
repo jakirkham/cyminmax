@@ -27,7 +27,7 @@ with open("README.rst") as readme_file:
     readme = readme_file.read()
 
 setup_requirements = [
-    # TODO: put package build requirements here
+    "cython>=0.25.2",
 ]
 
 install_requirements = [
