@@ -69,6 +69,25 @@ sources = glob("src/*.pxd") + glob("src/*.pyx")
 libraries = []
 define_macros = []
 extra_compile_args = []
+cython_directives = {}
+cython_line_directives = {}
+
+
+ext_modules = [
+    Extension(
+        "cyminmax",
+        sources=sources,
+        include_dirs=include_dirs,
+        library_dirs=library_dirs,
+        libraries=libraries,
+        define_macros=define_macros,
+        extra_compile_args=extra_compile_args,
+        language="c"
+    )
+]
+for em in ext_modules:
+    em.cython_directives = dict(cython_directives)
+    em.cython_line_directives = dict(cython_line_directives)
 
 
 setup(
@@ -85,18 +104,7 @@ setup(
     setup_requires=setup_requirements,
     install_requires=install_requirements,
     headers=headers,
-    ext_modules=[
-        Extension(
-            "cyminmax",
-            sources=sources,
-            include_dirs=include_dirs,
-            library_dirs=library_dirs,
-            libraries=libraries,
-            define_macros=define_macros,
-            extra_compile_args=extra_compile_args,
-            language="c"
-        )
-    ],
+    ext_modules=ext_modules,
     license="BSD 3-Clause",
     zip_safe=False,
     keywords="cyminmax",
