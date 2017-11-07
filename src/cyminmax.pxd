@@ -1,5 +1,7 @@
 cimport numpy
 
+import cython
+
 
 ctypedef fused real:
     numpy.uint8_t
@@ -14,6 +16,12 @@ ctypedef fused real:
     numpy.float64_t
 
 
+@cython.binding(False)
+@cython.boundscheck(False)
+@cython.initializedcheck(False)
+@cython.nonecheck(False)
+@cython.overflowcheck(False)
+@cython.wraparound(False)
 cdef inline void cminmax(real[:] arr, real[:] out) nogil:
     cdef real arr_i = arr[0]
     out[:] = arr_i
