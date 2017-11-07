@@ -27,8 +27,11 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
+version = versioneer.get_version()
+
 with open("README.rst") as readme_file:
     readme = readme_file.read()
+
 
 setup_requirements = [
     "cython>=0.25.2",
@@ -53,6 +56,11 @@ if not (({"develop", "test"} & set(sys.argv)) or
     any([v.startswith("bdist") for v in sys.argv]) or
     any([v.startswith("install") for v in sys.argv])):
     setup_requirements = []
+else:
+    with open("src/version.pxi", "w") as f:
+        f.writelines([
+            "__version__ = " + "\"" + str(version) + "\""
+        ])
 
 
 include_dirs = [
@@ -92,7 +100,7 @@ for em in ext_modules:
 
 setup(
     name="cyminmax",
-    version=versioneer.get_version(),
+    version=version,
     description="A minmax implementation in Cython for use with NumPy",
     long_description=readme,
     author="John Kirkham",

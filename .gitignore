@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 src/cyminmax.c
+src/version.pxi
 
 # Distribution / packaging
 .Python
