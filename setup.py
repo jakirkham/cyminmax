@@ -7,11 +7,21 @@ from glob import glob
 
 import setuptools
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext as BuildExtCommand
 from setuptools.command.test import test as TestCommand
 
 from distutils.sysconfig import get_config_var, get_python_inc
 
 import versioneer
+
+
+class NumPyBuildExt(BuildExtCommand):
+    def finalize_options(self):
+        BuildExtCommand.finalize_options(self)
+        # Prevent numpy from thinking it is still in its setup process:
+        __builtins__.__NUMPY_SETUP__ = False
+        import numpy
+        self.include_dirs.append(numpy.get_include())
 
 
 class PyTest(TestCommand):
@@ -35,6 +45,7 @@ with open("README.rst") as readme_file:
 
 setup_requirements = [
     "cython>=0.25.2",
+    "numpy>=1.11.3",
 ]
 
 install_requirements = [
@@ -45,10 +56,10 @@ test_requirements = [
     "pytest",
 ]
 
-cmdclasses = {
-    "test": PyTest,
-}
+cmdclasses = dict()
 cmdclasses.update(versioneer.get_cmdclass())
+cmdclasses["build_ext"] = NumPyBuildExt
+cmdclasses["test"] = PyTest
 
 
 if not (({"develop", "test"} & set(sys.argv)) or
