@@ -25,7 +25,7 @@ def minmax(arr):
     if not arr.size:
         raise ValueError("zero-size array to reduction operation minmax which has no identity")
 
-    arr = arr.flatten()
+    arr = arr.ravel()
     out = numpy.empty((2,), dtype=arr.dtype)
 
     if arr.dtype.type is numpy.bool:
