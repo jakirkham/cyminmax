@@ -4,16 +4,18 @@ cimport numpy
 
 ctypedef fused real:
     numpy.npy_bool
-    numpy.uint8_t
-    numpy.uint16_t
-    numpy.uint32_t
-    numpy.uint64_t
-    numpy.int8_t
-    numpy.int16_t
-    numpy.int32_t
-    numpy.int64_t
-    numpy.float32_t
-    numpy.float64_t
+    numpy.npy_ubyte
+    numpy.npy_ushort
+    numpy.npy_uint
+    numpy.npy_ulong
+    numpy.npy_ulonglong
+    numpy.npy_byte
+    numpy.npy_short
+    numpy.npy_int
+    numpy.npy_long
+    numpy.npy_longlong
+    numpy.npy_float
+    numpy.npy_double
 
 
 @cython.binding(False)
