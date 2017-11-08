@@ -29,9 +29,7 @@ def minmax(arr):
     out = numpy.empty((2,), dtype=arr.dtype)
 
     if arr.dtype.type is numpy.bool:
-        cyminmax.cminmax[numpy.uint8_t](
-            arr.view(numpy.uint8), out.view(numpy.uint8)
-        )
+        cyminmax.cminmax[numpy.npy_bool](arr, out)
     elif arr.dtype.type is numpy.uint8:
         cyminmax.cminmax[numpy.uint8_t](arr, out)
     elif arr.dtype.type is numpy.uint16:

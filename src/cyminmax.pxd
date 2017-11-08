@@ -3,6 +3,7 @@ cimport numpy
 
 
 ctypedef fused real:
+    numpy.npy_bool
     numpy.uint8_t
     numpy.uint16_t
     numpy.uint32_t
