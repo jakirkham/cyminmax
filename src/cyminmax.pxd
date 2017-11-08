@@ -1,6 +1,5 @@
+cimport cython
 cimport numpy
-
-import cython
 
 
 ctypedef fused real:
