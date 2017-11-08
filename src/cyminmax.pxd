@@ -8,10 +8,12 @@ ctypedef fused real:
     numpy.npy_ushort
     numpy.npy_uint
     numpy.npy_ulong
+    numpy.npy_ulonglong
     numpy.npy_byte
     numpy.npy_short
     numpy.npy_int
     numpy.npy_long
+    numpy.npy_longlong
     numpy.npy_float
     numpy.npy_double
 

@@ -39,6 +39,8 @@ def minmax(arr):
         cyminmax.cminmax[numpy.npy_uint](arr, out)
     elif arr_dtype_num == numpy.NPY_ULONG:
         cyminmax.cminmax[numpy.npy_ulong](arr, out)
+    elif arr_dtype_num == numpy.NPY_ULONGLONG:
+        cyminmax.cminmax[numpy.npy_ulonglong](arr, out)
     elif arr_dtype_num == numpy.NPY_BYTE:
         cyminmax.cminmax[numpy.npy_byte](arr, out)
     elif arr_dtype_num == numpy.NPY_SHORT:
@@ -47,6 +49,8 @@ def minmax(arr):
         cyminmax.cminmax[numpy.npy_int](arr, out)
     elif arr_dtype_num == numpy.NPY_LONG:
         cyminmax.cminmax[numpy.npy_long](arr, out)
+    elif arr_dtype_num == numpy.NPY_LONGLONG:
+        cyminmax.cminmax[numpy.npy_longlong](arr, out)
     elif arr_dtype_num == numpy.NPY_FLOAT:
         cyminmax.cminmax[numpy.npy_float](arr, out)
     elif arr_dtype_num == numpy.NPY_DOUBLE:
