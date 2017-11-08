@@ -28,6 +28,7 @@ def test_minmax_err():
     (1,),
     (1, 1),
     (10),
+    (11),
     (10, 11),
 ])
 @pytest.mark.parametrize("dtype", [
