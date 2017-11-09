@@ -24,21 +24,23 @@ ctypedef fused real:
 @cython.nonecheck(False)
 @cython.overflowcheck(False)
 @cython.wraparound(False)
-cdef inline void cminmax(real[::1] arr, real[::1] out) nogil:
+cdef inline void cminmax(real[:] arr, real[:] out) nogil:
     cdef size_t arr_size = arr.shape[0]
 
-    cdef real* arr_begin = &arr[0]
-    cdef real* arr_end = (arr_begin + arr_size)
+    cdef real arr_max
+    cdef real arr_min
 
-    cdef real* arr_min = &out[0]
-    cdef real* arr_max = (arr_min + 1)
+    arr_min = arr_max = arr[0]
 
-    arr_min[0] = arr_max[0] = arr_begin[0]
+    cdef real arr_i
 
-    cdef real* arr_pos = arr_begin + 1
-    while arr_pos != arr_end:
-        if arr_pos[0] < arr_min[0]:
-            arr_min[0] = arr_pos[0]
-        elif arr_pos[0] > arr_max[0]:
-            arr_max[0] = arr_pos[0]
-        arr_pos += 1
+    cdef size_t i
+    for i in range(1, arr_size):
+        arr_i = arr[i]
+        if arr_i < arr_min:
+            arr_min = arr_i
+        elif arr_i > arr_max:
+            arr_max = arr_i
+
+    out[0] = arr_min
+    out[1] = arr_max
