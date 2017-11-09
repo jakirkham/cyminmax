@@ -94,7 +94,7 @@ headers = []
 sources = glob("src/*.pxd") + glob("src/*.pyx")
 libraries = []
 define_macros = []
-extra_compile_args = []
+extra_compile_args = ["-std=c++11"]
 cython_directives = {}
 cython_line_directives = {}
 
@@ -120,7 +120,7 @@ ext_modules = [
         libraries=libraries,
         define_macros=define_macros,
         extra_compile_args=extra_compile_args,
-        language="c"
+        language="c++"
     )
 ]
 for em in ext_modules:
