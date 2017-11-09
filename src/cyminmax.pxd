@@ -18,7 +18,6 @@ ctypedef fused real:
     numpy.npy_double
 
 
-@cython.binding(False)
 @cython.boundscheck(False)
 @cython.initializedcheck(False)
 @cython.nonecheck(False)
