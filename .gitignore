@@ -3,9 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+# C/C++ extensions
 *.so
 src/cyminmax.c
+src/cyminmax.cpp
 src/version.pxi
 
 # Distribution / packaging

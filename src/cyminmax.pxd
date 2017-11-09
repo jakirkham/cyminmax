@@ -2,6 +2,13 @@ cimport cython
 cimport numpy
 
 
+from libcpp.pair cimport pair
+
+cdef extern from "<algorithm>" namespace "std" nogil:
+     pair[ForwardIt, ForwardIt] minmax_element[ForwardIt](ForwardIt first,
+                                                          ForwardIt last) nogil
+
+
 ctypedef fused real:
     numpy.npy_bool
     numpy.npy_ubyte
@@ -18,29 +25,22 @@ ctypedef fused real:
     numpy.npy_double
 
 
+ctypedef real* real_ptr
+
+
 @cython.binding(False)
 @cython.boundscheck(False)
 @cython.initializedcheck(False)
 @cython.nonecheck(False)
 @cython.overflowcheck(False)
 @cython.wraparound(False)
-cdef inline void cminmax(real[:] arr, real[:] out) nogil:
+cdef inline void cminmax(real[::1] arr, real[::1] out) nogil:
     cdef size_t arr_size = arr.shape[0]
 
-    cdef real arr_max
-    cdef real arr_min
+    cdef real_ptr arr_begin = &arr[0]
+    cdef real_ptr arr_end = (arr_begin + arr_size)
 
-    arr_min = arr_max = arr[0]
+    cdef pair[real_ptr, real_ptr] res = minmax_element(arr_begin, arr_end)
 
-    cdef real arr_i
-
-    cdef size_t i
-    for i in range(1, arr_size):
-        arr_i = arr[i]
-        if arr_i < arr_min:
-            arr_min = arr_i
-        elif arr_i > arr_max:
-            arr_max = arr_i
-
-    out[0] = arr_min
-    out[1] = arr_max
+    out[0] = res.first[0]
+    out[1] = res.second[0]
