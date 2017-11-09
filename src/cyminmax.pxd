@@ -30,7 +30,7 @@ cdef inline void cminmax(real[::1] arr, real[:] out) nogil:
     cdef real arr_max
     cdef real arr_min
 
-    arr_min = arr_max = arr[0]
+    arr_min = arr_max = arr_ptr[0]
 
     cdef real arr_i
 
