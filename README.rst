@@ -15,6 +15,10 @@ cyminmax
         :target: https://travis-ci.org/jakirkham/cyminmax
         :alt: Travis CI
 
+.. image:: https://ci.appveyor.com/api/projects/status/github/jakirkham/cyminmax?svg=true&branch=master
+        :target: https://ci.appveyor.com/project/jakirkham/cyminmax
+        :alt: AppVeyor
+
 .. image:: https://readthedocs.org/projects/cyminmax/badge/?version=latest
         :target: https://cyminmax.readthedocs.io/en/latest/?badge=latest
         :alt: Read the Docs
