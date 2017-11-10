@@ -61,7 +61,6 @@ cmdclasses.update(versioneer.get_cmdclass())
 cmdclasses["build_ext"] = NumPyBuildExt
 cmdclasses["test"] = PyTest
 
-
 if not (({"develop", "test"} & set(sys.argv)) or
     any([v.startswith("build") for v in sys.argv]) or
     any([v.startswith("bdist") for v in sys.argv]) or
