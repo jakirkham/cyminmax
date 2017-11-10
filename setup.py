@@ -49,7 +49,7 @@ setup_requirements = [
 ]
 
 install_requirements = [
-    # TODO: put package install requirements here
+    "numpy>=1.11.3",
 ]
 
 test_requirements = [
