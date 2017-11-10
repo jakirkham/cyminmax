@@ -6,7 +6,7 @@ cimport numpy
 include "version.pxi"
 
 
-def minmax(arr, axis=None):
+def minmax(arr, axis=None, out=None):
     """
     Computes the minimum and maximum of an array in one pass.
 
@@ -40,7 +40,10 @@ def minmax(arr, axis=None):
         s for i, s in enumerate(arr.shape[:len(other_axis)]) if i not in axis
     )
     out_shape += (2,)
-    out = numpy.empty(out_shape, dtype=arr.dtype)
+    if out is None:
+        out = numpy.empty(out_shape, dtype=arr.dtype)
+    elif out.shape != out_shape:
+        raise ValueError("Expected `out` to have shape: %s" % repr(out_shape))
 
     cdef numpy.NPY_TYPES arr_dtype_num = arr.dtype.num
 
