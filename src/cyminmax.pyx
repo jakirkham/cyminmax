@@ -23,7 +23,10 @@ def minmax(arr):
     arr = numpy.asanyarray(arr)
 
     if not arr.size:
-        raise ValueError("zero-size array to reduction operation minmax which has no identity")
+        raise ValueError(
+            "zero-size array to reduction operation minmax which has no "
+            "identity"
+        )
 
     arr = arr.ravel(order="K")
     out = numpy.empty((2,), dtype=arr.dtype)
