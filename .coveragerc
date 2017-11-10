@@ -1,6 +1,5 @@
 [run]
 branch = True
-source = cyminmax
 plugins = Cython.Coverage
 [report]
 exclude_lines =
