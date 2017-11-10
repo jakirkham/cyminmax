@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import glob
 import os
 import sys
-from glob import glob
 
 import setuptools
 from setuptools import setup, Extension
@@ -61,7 +61,6 @@ cmdclasses.update(versioneer.get_cmdclass())
 cmdclasses["build_ext"] = NumPyBuildExt
 cmdclasses["test"] = PyTest
 
-
 if not (({"develop", "test"} & set(sys.argv)) or
     any([v.startswith("build") for v in sys.argv]) or
     any([v.startswith("bdist") for v in sys.argv]) or
@@ -91,7 +90,7 @@ library_dirs = list(filter(
 ))
 
 headers = []
-sources = glob("src/*.pxd") + glob("src/*.pyx")
+sources = glob.glob("src/*.pxd") + glob.glob("src/*.pyx")
 libraries = []
 define_macros = []
 extra_compile_args = []
