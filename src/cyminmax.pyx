@@ -6,7 +6,7 @@ cimport numpy
 include "version.pxi"
 
 
-def minmax(arr):
+def minmax(a):
     """
     Computes the minimum and maximum of an array in one pass.
 
@@ -14,13 +14,13 @@ def minmax(arr):
     by doing both in a single pass.
 
     Args:
-        arr(array-like):           array to find min and max of.
+        a(array-like):             array to find min and max of.
 
     Returns:
         out(numpy.ndarray):        an array with the min and max values.
     """
 
-    arr = numpy.asanyarray(arr)
+    arr = numpy.asanyarray(a)
 
     if not arr.size:
         raise ValueError("zero-size array to reduction operation minmax which has no identity")
