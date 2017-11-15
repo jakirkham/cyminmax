@@ -1,6 +1,6 @@
 cimport cyminmax
 
-import numpy
+cimport cpython
 cimport numpy
 
 include "version.pxi"
@@ -23,7 +23,8 @@ def minmax(a):
         out(numpy.ndarray):        an array with the min and max values.
     """
 
-    arr = numpy.asanyarray(a)
+    cpython.Py_INCREF(a)
+    arr = numpy.PyArray_EnsureAnyArray(a)
 
     cdef numpy.NPY_TYPES arr_dtype_num = <numpy.NPY_TYPES>numpy.PyArray_TYPE(
         arr
@@ -38,7 +39,7 @@ def minmax(a):
 
     cdef bint arr_ownsdata = numpy.PyArray_CHKFLAGS(arr, numpy.NPY_OWNDATA)
     if not arr_ownsdata:
-        arr = arr.copy()
+        arr = numpy.PyArray_Copy(arr)
         arr_ownsdata = True
 
     cdef void* arr_data = numpy.PyArray_DATA(arr)
