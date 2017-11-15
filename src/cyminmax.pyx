@@ -1,8 +1,6 @@
 cimport cyminmax
 
 cimport cpython
-
-import numpy
 cimport numpy
 
 include "version.pxi"
