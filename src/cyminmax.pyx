@@ -1,5 +1,7 @@
 cimport cyminmax
 
+cimport cpython
+
 import numpy
 cimport numpy
 
@@ -23,7 +25,8 @@ def minmax(a):
         out(numpy.ndarray):        an array with the min and max values.
     """
 
-    arr = numpy.asanyarray(a)
+    cpython.Py_INCREF(a)
+    arr = numpy.PyArray_EnsureAnyArray(a)
 
     cdef numpy.NPY_TYPES arr_dtype_num = <numpy.NPY_TYPES>numpy.PyArray_TYPE(
         arr
