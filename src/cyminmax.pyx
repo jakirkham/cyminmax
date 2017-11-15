@@ -6,6 +6,9 @@ cimport numpy
 include "version.pxi"
 
 
+numpy.import_array()
+
+
 def minmax(a):
     """
     Computes the minimum and maximum of an array in one pass.
@@ -22,7 +25,7 @@ def minmax(a):
 
     arr = numpy.asanyarray(a)
 
-    if not arr.size:
+    if not numpy.PyArray_SIZE(arr):
         raise ValueError(
             "zero-size array to reduction operation minmax which has no "
             "identity"
