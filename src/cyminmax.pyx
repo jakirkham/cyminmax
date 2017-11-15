@@ -41,7 +41,7 @@ def minmax(a):
 
     cdef bint arr_ownsdata = numpy.PyArray_CHKFLAGS(arr, numpy.NPY_OWNDATA)
     if not arr_ownsdata:
-        arr = arr.copy()
+        arr = numpy.PyArray_Copy(arr)
         arr_ownsdata = True
 
     cdef void* arr_data = numpy.PyArray_DATA(arr)
