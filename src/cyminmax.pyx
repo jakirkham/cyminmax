@@ -39,7 +39,8 @@ def minmax(a):
         arr = arr.copy()
         arr_ownsdata = True
 
-    out = numpy.empty((2,), dtype=arr_dtype)
+    cdef numpy.npy_intp out_shape = 2
+    out = numpy.PyArray_EMPTY(1, &out_shape, arr_dtype.num, 0)
 
     cdef numpy.NPY_TYPES arr_dtype_num = arr_dtype.num
     if arr_dtype_num == numpy.NPY_BOOL:
