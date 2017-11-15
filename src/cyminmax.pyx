@@ -25,6 +25,7 @@ def minmax(a):
 
     arr = numpy.asanyarray(a)
 
+    cdef numpy.dtype arr_dtype = arr.dtype
     cdef size_t arr_size = numpy.PyArray_SIZE(arr)
 
     if not arr_size:
@@ -38,9 +39,9 @@ def minmax(a):
         arr = arr.copy()
         arr_ownsdata = True
 
-    out = numpy.empty((2,), dtype=arr.dtype)
+    out = numpy.empty((2,), dtype=arr_dtype)
 
-    cdef numpy.NPY_TYPES arr_dtype_num = arr.dtype.num
+    cdef numpy.NPY_TYPES arr_dtype_num = arr_dtype.num
     if arr_dtype_num == numpy.NPY_BOOL:
         cyminmax.cminmax[numpy.npy_bool](
             <numpy.npy_bool*>numpy.PyArray_DATA(arr), arr_size, out
