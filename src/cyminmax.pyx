@@ -28,8 +28,10 @@ def minmax(a):
             "identity"
         )
 
-    if not arr.flags.owndata:
+    cdef bint arr_ownsdata = numpy.PyArray_CHKFLAGS(arr, numpy.NPY_OWNDATA)
+    if not arr_ownsdata:
         arr = arr.copy()
+        arr_ownsdata = True
 
     out = numpy.empty((2,), dtype=arr.dtype)
 
