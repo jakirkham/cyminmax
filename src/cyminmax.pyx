@@ -28,6 +28,9 @@ def minmax(a):
             "identity"
         )
 
+    if not arr.flags.owndata:
+        arr = arr.copy()
+
     arr = arr.ravel(order="K")
     out = numpy.empty((2,), dtype=arr.dtype)
 
