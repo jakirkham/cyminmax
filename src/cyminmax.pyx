@@ -31,7 +31,6 @@ def minmax(a):
     if not arr.flags.owndata:
         arr = arr.copy()
 
-    arr = arr.ravel(order="K")
     out = numpy.empty((2,), dtype=arr.dtype)
 
     cdef numpy.NPY_TYPES arr_dtype_num = arr.dtype.num
